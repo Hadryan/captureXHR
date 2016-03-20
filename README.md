@@ -19,7 +19,7 @@ captureXHR('https://pkav.net',{onopen:(method,url)=>{
 #### onsend
 ```
 captureXHR('https://pkav.net',{onsend:(data)=>console.log(data)})
-``
+```
 ```
 captureXHR('https://pkav.net',{onsend:(data)=>{
   if(data.indexOf('password')!==-1){
@@ -27,4 +27,4 @@ captureXHR('https://pkav.net',{onsend:(data)=>{
   }
   return data;
 }})
-``
+```
